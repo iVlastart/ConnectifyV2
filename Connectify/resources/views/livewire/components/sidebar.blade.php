@@ -62,22 +62,7 @@
                         </form>
                     </header>
                     <main>
-                        @if(true)
-                            <ul class="space-y-2 overflow-x-hidden">
-                                    <li>
-                                        <a href="#" class="flex gap-2 truncate items-center">
-                                            <x-avatar wire-ignore class="w-9 h-9 mb-auto"/>
-                                            <div class="flex flex-col">
-                                                <span class="font-bold text-sm"></span>
-                                            </div>
-                                        </a>
-                                    </li>
-                            </ul>
-                        @else
-                            <center>
-                                No results
-                            </center>
-                        @endif
+                        
                     </main>
                 </div>
             </template>
