@@ -19,10 +19,10 @@ class Post extends Model
         'allow_comments'=>'boolean'
     ];
 
-    function media():MorphMany
+    /*function media():MorphMany
     {
         return $this->morphMany(Media::class, 'mediable');
-    }
+    }*/
 
     function user(): BelongsTo
     {
