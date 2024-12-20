@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components;
 
+use App\Http\Controllers\DbController;
 use Livewire\Component;
 
 class Sidebar extends Component
@@ -10,4 +11,5 @@ class Sidebar extends Component
     {
         return view('livewire.components.sidebar');
     }
+
 }
