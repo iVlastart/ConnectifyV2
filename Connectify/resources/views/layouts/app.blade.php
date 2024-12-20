@@ -29,17 +29,18 @@
                     <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
                         Menu
                     </label>
-
                     {{$slot}}
                 </div>
-            <div class="drawer-side">
-                <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                    <!-- Sidebar content here -->
-                    <li><a>Home</a></li>
-                    <li><a>Search</a></li>
-                </ul>
-            </div>
+            @if(!request()->is('login') && !request()->is('register'))
+                <div class="drawer-side">
+                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+                    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                        <!-- Sidebar content here -->
+                        <li><a>Home</a></li>
+                        <li><a>Search</a></li>
+                    </ul>
+                </div>
+            @endif
         </div>
     </body>
 </html>

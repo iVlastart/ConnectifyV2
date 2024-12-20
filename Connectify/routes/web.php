@@ -1,21 +1,16 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LoginController;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Signin;
 use App\Livewire\Explore;
 use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', Home::class);
+Route::get('/', Home::class)->name('home');
 Route::get('/explore', Explore::class)->name('explore');
-
-Route::get('/home', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
+Route::get('/login', Login::class)->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/register', Login::class)->name('signin');
+Route::post('/register', [LoginController::class, 'register'])->name('signin');

@@ -4,7 +4,7 @@
         <x-avatar class="h-9 w-9"/>
         <div class="grid grid-cols-7 w-full gap-2">
             <div class="col-span-5">
-                <h5 class="font-semibold truncate text-sm">{{fake()->name}}</h5>
+                <h5 class="font-semibold truncate text-sm">{{$username}}</h5>
             </div>
             <div class="col-span-2 flex text-right justify-end">
                 <button class="text-gray-500 ml-auto">
@@ -17,51 +17,16 @@
     </header>
     {{--main--}}
     <main>
-        <div class="my-2">
-            <!-- Slider main container -->
-            <div x-init="
-            
-            new Swiper($el,{
-                modules: [Navigation, Pagination],
-                loop:true,
-                pagination: {
-                    el: '.swiper-pagination',
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-            });
-            " class="swiper h-[500px] border bg-white">
-                <!-- Additional required wrapper -->
-                <div x-cloak class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide"><x-video/></div>
-                    <div class="swiper-slide"><img src="https://images.pexels.com/photos/3371094/pexels-photo-3371094.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="h-[500px]full-w block object-scale-down"></div>
-                    ...
-                </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
+        <div>
+            @if($hasText)
+                <span>
+                    {{$content}}
+                </span>
+            @endif
 
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev absolute top-1/2 z-10 p-2">
-                    <div class="bg-white/95 border p-1 rounded-full text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="swiper-button-next absolute right-0 top-1/2 z-10 p-2">
-                    <div class="bg-white/95 border p-1 rounded-full text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- If we need scrollbar -->
-                <div class="swiper-scrollbar"></div>
-            </div>
+            @if($hasMedia)
+                <x-video/>
+            @endif
         </div>
     </main>
     {{--footer--}}
@@ -91,35 +56,5 @@
                 </svg>
             </span>
         </div>
-
-        {{--likes and views--}}
-        <p class="font-bold text-sm">
-            100 likes
-        </p>
-        {{--name and comment--}}
-        <div class="flex text-sm gap-2 font-medium">
-            <p>
-                <strong class="font-bold">{{fake()->name}}</strong>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum ipsam nesciunt alias veniam similique rerum consequatur aliquid quis, ipsum, harum facilis atque repudiandae soluta adipisci error pariatur sed voluptas incidunt?
-            </p>
-        </div>
-
-        {{--view post modal--}}
-        <button class="text-slate-500/90 text-sm font-medium">View all comments</button>
-
-        {{--leave a comment--}}
-        <form x-data="{comment:''}" class="grid grid-cols-12 items-center w-full">
-            @csrf
-            <input x-model="comment" type="text" placeholder="Leave a comment" class="border-0 col-span-10 placeholder:text-sm outline-none focus:outline-none
-                px-0 rounder-lg hover:ring-0 focus:ring-0">
-            <div class="cols-span-1 ml-auto flex justify-end text-right">
-                <button x-cloak x-show="comment.length>0" class="text-sm font-semibold flex justify-end text-blue-500">
-                    Post
-                </button>
-            </div>
-            <span class="col-span-1 ml-auto">
-
-            </span>
-        </form>
     </footer>
 </div>
