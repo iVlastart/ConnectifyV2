@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class Explore extends Component
+class Search extends Component
 {
     public function render()
     {
-        return view('livewire.explore');
+        return view('livewire.search');
     }
 }

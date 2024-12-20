@@ -25,15 +25,15 @@
         <aside class="lg:col-span-8 overflow-hidden">
             {{--posts--}}
             <section class="mt-5 space-y-4 p-2">
-                <livewire:post.item username="John" content="Lorem" hasText="1"/>
+                
             </section>
         </aside>
 
         {{--suggestions--}}
         <aside class="lg:col-span-4 hidden lg:block p-4">
             <div class="flex items-center gap-2">
-                <x-avatar class="w-12 h-12"/>
-                <h4 class="font-medium">{{fake()->name}}</h4>
+                <x-avatar class="w-12 h-12" src="{{$pfp}}"/>
+                <h4 class="font-medium">{{$_SESSION['username']}}</h4>
             </div>
 
             <section class="mt-4">
@@ -41,7 +41,7 @@
                 <ul class="my-2 space-y-3">
                     @for($i=0;$i<5;$i++)
                         <li class="flex items-center gap-3">
-                            <x-avatar src="https://cdn.discordapp.com/attachments/1080266016296288348/1319389611016851516/20240801_125606.jpg?ex=6765c8d4&is=67647754&hm=e051461efd98880f4c9d7746a83b0151e5321555f072e7d553c3c23348bb091d&" class="w-12 h-12"/>
+                            <x-avatar src="https://picsum.photos/536/354?random={{ rand() }}" class="w-12 h-12"/>
                             <div class="grid grid-cols-7 w-full gap-2">
                                 <div class="col-span-5">
                                     <h5 class="font-semibold truncate text-sm">

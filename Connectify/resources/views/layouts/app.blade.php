@@ -27,20 +27,13 @@
             <div class="drawer-content flex flex-col items-center justify-center">
                 <!-- Page content here -->
                     <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">
-                        Menu
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                        </svg>
                     </label>
                     {{$slot}}
                 </div>
-            @if(!request()->is('login') && !request()->is('register'))
-                <div class="drawer-side">
-                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                        <!-- Sidebar content here -->
-                        <li><a>Home</a></li>
-                        <li><a>Search</a></li>
-                    </ul>
-                </div>
-            @endif
+            <livewire:components.sidebar/>
         </div>
     </body>
 </html>
