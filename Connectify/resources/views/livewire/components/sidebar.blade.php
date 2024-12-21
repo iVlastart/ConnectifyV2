@@ -38,7 +38,7 @@
                         <span class="text-lg font-bold">Notifications</span>
                     </div>
                 </a></li>
-                <li><a>
+                <li><a href="profile/{{$_SESSION['username']}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person w-7 h-7" viewBox="0 0 16 16">
                         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                     </svg>
@@ -72,14 +72,14 @@
                 <h5 class="text-4xl font-bold my-4">Create</h5>
             </header>
             <main>
-                <form action="/" method="post">
+                <form action="/" method="post" enctype="multipart/form-data">
                     @csrf
                     <center>
                         <div id="counter">
                             0/100
                         </div>
                     </center>
-                    <textarea id="txtInput" placeholder="What is happening?" maxlength="100" class="border outline-none w-full focus:outline-none bg-white-100 rounded-lg hover:ring-0 focus:ring-0 resize-none"></textarea>                    
+                    <textarea name="content" id="txtInput" placeholder="What is happening?" maxlength="100" class="border outline-none w-full focus:outline-none bg-white-100 rounded-lg hover:ring-0 focus:ring-0 resize-none"></textarea>                    
                     <div class="flex items-center justify-center w-full pl-2">
                         <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-white-300 border-dashed rounded-lg cursor-pointer bg-white-50 dark:hover:bg-white-800 dark:bg-white-700 hover:bg-gray-100 dark:border-white-600 dark:hover:border-white-500 dark:hover:bg-white-600">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -91,13 +91,17 @@
                             </div>
                             <input id="dropzone-file" type="file" class="hidden" />
                         </label>
-                    </div> 
+                    </div>
+                    <center>
+                        <button type="submit">Post</button>
+                    </center>
                 </form>
             </main>
         </div>
         <script>
             document.getElementById('txtInput').addEventListener('input', function(){
                 const counter =document.getElementById('counter');
+                counter.innerText = this.value.length+"/100";
             });
         </script>
     </div>

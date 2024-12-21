@@ -1,4 +1,8 @@
 <div class="w-full h-full">
+    @php
+        use App\Http\Controllers\DbController;
+        $posts = DbController::queryAll('SELECT * FROM posts ORDER BY RAND()');
+    @endphp
     {{--Header--}}
     <header class="md:hidden sticky top-0 bg-white">
         <div class="grid grid-cols-12 gap-2 items-center">
@@ -25,14 +29,23 @@
         <aside class="lg:col-span-8 overflow-hidden">
             {{--posts--}}
             <section class="mt-5 space-y-4 p-2">
-                
+                @foreach($posts as $post)
+                    @php
+                        $username=DbController::query('SELECT Username FROM users WHERE ID=?', $post['ID']);
+                        $date = DateTime::createFromFormat('Y-m-d',$post['PostDate'])->format('d/m/Y');
+                    @endphp
+                    <livewire:post.item content="{{$post['Content']}}" hasText="{{$post['hasText']}}" username="{{$username[0]['Username']}}"
+                        postDate="{{$date}}"/>
+                @endforeach
             </section>
         </aside>
 
         {{--suggestions--}}
         <aside class="lg:col-span-4 hidden lg:block p-4">
             <div class="flex items-center gap-2">
-                <x-avatar class="w-12 h-12" src="{{$pfp}}"/>
+                <a href="profile/{{$_SESSION['username']}}">
+                    <x-avatar class="w-12 h-12" src="{{$pfp}}"/>
+                </a>
                 <h4 class="font-medium">{{$_SESSION['username']}}</h4>
             </div>
 
