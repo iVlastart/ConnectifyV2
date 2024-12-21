@@ -1,4 +1,3 @@
-@if(!request()->is('login') && !request()->is('register'))
     <div class="drawer-side" x-data="{
         shrink:false,
         showSearch: false
@@ -68,4 +67,3 @@
             </template>
         </div>
     </div>
-@endif

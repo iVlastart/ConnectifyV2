@@ -20,6 +20,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles <!-- Include Livewire styles -->
     </head>
     <body class="font-sans antialiased">
         <div class="drawer lg:drawer-open">
@@ -31,11 +32,11 @@
                             <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                         </svg>
                     </label>
-                    <div>
-                        {{$slot}}
-                    </div>
+                    {{$slot}}
+                    @if(!request()->is('login') || !request()->is('register'))
+                    <livewire:components.sidebar/>
+                    @endif
                 </div>
-            <livewire:components.sidebar/>
         </div>
     </body>
 </html>
