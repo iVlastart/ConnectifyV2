@@ -13,8 +13,10 @@ class Item extends Component
     public $hasText;
     public $postDate;
     public $url;
+    public $isLiked;
+    public $postID;
 
-    public function mount($username = 'guest', $content="Hello, World!", $hasMedia=false, $hasText=false, $postDate="Today", $url="") // Default value
+    public function mount($username = 'guest', $content="Hello, World!", $hasMedia=false, $hasText=false, $postDate="Today", $url="", $isLiked=false, $postID=0) // Default value
     {
         $this->username = $username;
         $this->content = $content;
@@ -22,6 +24,8 @@ class Item extends Component
         $this->hasText = $hasText;
         $this->postDate = $postDate;
         $this->url = $url;
+        $this->isLiked = $isLiked;
+        $this->postID = $postID;
     }
     public function render()
     {

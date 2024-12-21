@@ -10,6 +10,7 @@ class Home extends Component
     public function render()
     {
         session_start();
+        if($_SESSION['username']==="") return redirect('login');
         $users = DbController::queryAll('SELECT * FROM users WHERE Username=?', $_SESSION['username']);
         foreach($users as $user)
         {

@@ -18,4 +18,15 @@ class PostController extends Controller
         DbController::query('INSERT INTO posts (ID, Content, url, hasMedia, hasText) VALUES(?,?,?,?,?)', $ID,$content,$url,$hasMedia, $hasText);
         return redirect('/');
     }
+
+    function toggleLike(Request $request)
+    {
+        session_start();
+        $data = new \stdClass();
+        $data->postID = $request->postID;
+        $data->isLiked = $request->isLiked;
+        !$data->isLiked
+        ? DbController::query('INSERT INTO isliked VALUES(?,?,?)', $_SESSION['username'], $data->postID, !$data->isLiked)
+        : DbController::query('DELETE FROM isliked WHERE Username=? AND Post_ID=?', $_SESSION['username'], $data->postID);
+    }
 }
