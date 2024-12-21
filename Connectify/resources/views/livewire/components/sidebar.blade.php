@@ -14,7 +14,7 @@
                         <span class="text-lg font-bold">Home</span>
                     </div>
                 </a></li>
-                <li><a @click="shrink=!shrink;showSearch=!showSearch">
+                <li><a @click="shrink=true;showSearch=!showSearch">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 w-7 h-7">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
@@ -22,7 +22,7 @@
                         <span class="text-lg font-bold">Search</span>
                     </div>
                 </a></li>
-                <li><a @click="shrink=!shrink;showCreate=!showCreate">
+                <li><a @click="shrink=true;showCreate=!showCreate">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 w-7 h-7">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
@@ -74,8 +74,30 @@
             <main>
                 <form action="/" method="post">
                     @csrf
-                    
+                    <center>
+                        <div id="counter">
+                            0/100
+                        </div>
+                    </center>
+                    <textarea id="txtInput" placeholder="What is happening?" maxlength="100" class="border outline-none w-full focus:outline-none bg-white-100 rounded-lg hover:ring-0 focus:ring-0 resize-none"></textarea>                    
+                    <div class="flex items-center justify-center w-full pl-2">
+                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-white-300 border-dashed rounded-lg cursor-pointer bg-white-50 dark:hover:bg-white-800 dark:bg-white-700 hover:bg-gray-100 dark:border-white-600 dark:hover:border-white-500 dark:hover:bg-white-600">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg class="w-8 h-8 mb-4 text-white-500 dark:text-white-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                </svg>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                            </div>
+                            <input id="dropzone-file" type="file" class="hidden" />
+                        </label>
+                    </div> 
                 </form>
             </main>
         </div>
+        <script>
+            document.getElementById('txtInput').addEventListener('input', function(){
+                const counter =document.getElementById('counter');
+            });
+        </script>
     </div>
