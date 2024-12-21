@@ -20,7 +20,6 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @livewireStyles <!-- Include Livewire styles -->
     </head>
     <body class="font-sans antialiased">
         <div class="drawer lg:drawer-open">
@@ -33,10 +32,10 @@
                         </svg>
                     </label>
                     {{$slot}}
-                    @if(!request()->is('login') || !request()->is('register'))
-                    <livewire:components.sidebar/>
-                    @endif
                 </div>
+            @if(!request()->is('login') && !request()->is('register'))
+            <livewire:components.sidebar/>
+            @endif
         </div>
     </body>
 </html>

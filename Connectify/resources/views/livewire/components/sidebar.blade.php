@@ -1,6 +1,7 @@
     <div class="drawer-side" x-data="{
         shrink:false,
-        showSearch: false
+        showSearch: false,
+        showCreate:false
     }">
         <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul x-cloak class="menu bg-base-200 text-base-content min-h-full w-80 p-4" :class="shrink ? 'w-40' : 'w-80'">
@@ -21,7 +22,7 @@
                         <span class="text-lg font-bold">Search</span>
                     </div>
                 </a></li>
-                <li><a>
+                <li><a @click="shrink=!shrink;showCreate=!showCreate">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 w-7 h-7">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
@@ -46,7 +47,7 @@
                     </div>
                 </a></li>
         </ul>
-        <div x-show="shrink" @click.outside="shrink=false;showSearch=false;" x-cloak x-transition.origin.left class="fixed inset-y-0 left-[70px] w-96 overflow-y-scroll
+        <div x-show="showSearch" @click.outside="shrink=false;showSearch=false;" x-cloak x-transition.origin.left class="fixed inset-y-0 left-[70px] w-96 overflow-y-scroll
             overflow-x-scroll shadow bg-white border rounded-r-2xl z-[5]">
             <template x-if="showSearch">
                 <div x-cloak class="h-full">
@@ -65,5 +66,16 @@
                     </main>
                 </div>
             </template>
+        </div>
+        <div x-show="showCreate" x-cloak x-transition.origin.left @click.outside="shrink=false;showCreate=false;" class="fixed inset-y-0 left-[70px] w-96 overflow-y-scroll overflow-x-scroll shadow bg-white border rounder-r-2xl z-[5]">
+            <header class="top-0 w-full bg-white py-2">
+                <h5 class="text-4xl font-bold my-4">Create</h5>
+            </header>
+            <main>
+                <form action="/" method="post">
+                    @csrf
+                    
+                </form>
+            </main>
         </div>
     </div>
