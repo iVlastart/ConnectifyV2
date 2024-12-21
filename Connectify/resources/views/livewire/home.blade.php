@@ -1,7 +1,7 @@
 <div class="w-full h-full">
     @php
         use App\Http\Controllers\DbController;
-        $posts = DbController::queryAll('SELECT * FROM posts ORDER BY RAND()');
+        $posts = DbController::queryAll('SELECT * FROM posts ORDER BY RAND() LIMIT 10');
     @endphp
     {{--Header--}}
     <header class="md:hidden sticky top-0 bg-white">
