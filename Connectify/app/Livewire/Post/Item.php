@@ -12,14 +12,16 @@ class Item extends Component
     public $hasMedia;
     public $hasText;
     public $postDate;
+    public $url;
 
-    public function mount($username = 'guest', $content="Hello, World!", $hasMedia=false, $hasText=false, $postDate="Today") // Default value
+    public function mount($username = 'guest', $content="Hello, World!", $hasMedia=false, $hasText=false, $postDate="Today", $url="") // Default value
     {
         $this->username = $username;
         $this->content = $content;
         $this->hasMedia = $hasMedia;
         $this->hasText = $hasText;
         $this->postDate = $postDate;
+        $this->url = $url;
     }
     public function render()
     {

@@ -25,8 +25,9 @@
                 <span>
                     {{$content}}
                 </span>
-            @elseif($hasMedia)
-                <x-video/>
+            @endif
+            @if($hasMedia)
+                <x-video source="{{$url}}"/>
             @endif
         </div>
     </main>

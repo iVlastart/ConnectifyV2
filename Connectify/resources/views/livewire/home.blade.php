@@ -35,7 +35,7 @@
                         $date = DateTime::createFromFormat('Y-m-d',$post['PostDate'])->format('d/m/Y');
                     @endphp
                     <livewire:post.item content="{{$post['Content']}}" hasText="{{$post['hasText']}}" username="{{$username[0]['Username']}}"
-                        postDate="{{$date}}"/>
+                        postDate="{{$date}}" hasMedia="{{$post['hasMedia']}}" url="{{$post['url']}}"/>
                 @endforeach
             </section>
         </aside>
@@ -46,7 +46,9 @@
                 <a href="profile/{{$_SESSION['username']}}">
                     <x-avatar class="w-12 h-12" src="{{$pfp}}"/>
                 </a>
-                <h4 class="font-medium">{{$_SESSION['username']}}</h4>
+                <a href="profile/{{$_SESSION['username']}}">
+                    <h4 class="font-medium">{{$_SESSION['username']}}</h4>
+                </a>
             </div>
 
             <section class="mt-4">
