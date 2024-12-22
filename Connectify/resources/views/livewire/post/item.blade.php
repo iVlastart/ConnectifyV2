@@ -1,4 +1,14 @@
 <div class="max-w-lg mx-auto">
+    @php
+        
+$loader = '<div role="status">
+    <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+    </svg>
+    <span class="sr-only">Loading...</span>
+</div>'
+    @endphp
     {{--header--}}
     <header class="flex items-center gap-3">
         <a href="/profile/{{$username}}"><x-avatar class="h-9 w-9"/></a>
@@ -11,26 +21,39 @@
             </div>
             <div class="col-span-1 flex text-right justify-end">
                 
-                <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-gray-500 ml-auto" type="button">
+                <button data-dropdown-toggle="dropdown" class="dropdownDefaultButton text-gray-500 ml-auto" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                         <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
                     </svg>
                 </button>
 
-                <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                <div class="dropdown z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                     <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            <form action="{{url('report')}}" method="post" class="reportForm">
+                                @csrf
+                                <input type="hidden" name="username" value="{{$username}}">
+                                <input type="hidden" name="postID" value="{{$postID}}">
+                                <button type="submit" class="btnReport flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-flag-fill" viewBox="0 0 16 16">
+                                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+                                    </svg>
+                                    <strong class="text-red-600">Report</strong>
+                                </button>
+                            </form>
+                        </a>
                     </li>
                     <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Block user
+                        </a>
                     </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-                    </li>
+                    @if($_SESSION['username']==='Connectify' || $username===$_SESSION['username'])
+                        <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                        </li>
+                    @endif
                     </ul>
                 </div>
 
@@ -87,7 +110,7 @@
     </footer>
     <script type="text/javascript">
         $(document).ready(() => {
-        $('.likeForm').off('submit').on('submit', function(e) {
+        $('.likeForm').on('submit', function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             const data = $(e.target).closest('form').serialize();
@@ -103,6 +126,41 @@
                     console.log(xhr.responseText);
                 }
             });
+        });
+        $('.reportForm').on('submit', function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const data = $(e.target).closest('form').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '{{url("report")}}',
+                data: data,
+                success: (resp)=>{
+                    const btnReport = $(e.target).find('.btnReport');
+                    btnReport.html('Reported');
+                    btnReport.prop('disabled', true);
+                },
+                beforeSend: ()=>{
+                    const btnReport = $(e.target).find('.btnReport');
+                    btnReport.html("Reporting...");
+                    btnReport.prop('disabled', true);
+                },
+                error: (xhr, status, error)=>{
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+        $(document).on('click', '.dropdownDefaultButton', function() {
+            const dropdownMenu = $(this).next('.dropdown');
+            $('.dropdown').not(dropdownMenu).addClass('hidden'); // Hide other dropdowns
+            dropdownMenu.toggleClass('hidden'); // Toggle the clicked dropdown
+        });
+
+        // Close dropdowns if clicking outside
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.dropdown, .dropdownDefaultButton').length) {
+                $('.dropdown').addClass('hidden'); // Hide all dropdowns
+            }
         });
     });
     </script>
