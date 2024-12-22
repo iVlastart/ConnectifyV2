@@ -140,16 +140,15 @@
                 }
             });
         });
-        $(document).on('click', '.dropdownDefaultButton', function() {
+        $(document).off('click', '.dropdownDefaultButton').on('click', '.dropdownDefaultButton', function() {
             const dropdownMenu = $(this).next('.dropdown');
-            $('.dropdown').not(dropdownMenu).addClass('hidden'); // Hide other dropdowns
-            dropdownMenu.toggleClass('hidden'); // Toggle the clicked dropdown
+            $('.dropdown').not(dropdownMenu).addClass('hidden');
+            dropdownMenu.toggleClass('hidden');
         });
 
-        // Close dropdowns if clicking outside
         $(document).on('click', function(e) {
             if (!$(e.target).closest('.dropdown, .dropdownDefaultButton').length) {
-                $('.dropdown').addClass('hidden'); // Hide all dropdowns
+                $('.dropdown').addClass('hidden');
             }
         });
     });
