@@ -3,6 +3,7 @@
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     @php
         use App\Http\Controllers\DbController;
+        if($_SESSION['username']!=='Connectify') return redirect('/');
     @endphp
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-black-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -40,16 +41,18 @@
                     {{$content[0]['Content']}}
                 </td>
                 <td class="px-6 py-4">
-                    <form action="{{url('suspend/'.$report['Username'])}}">
+                    <form action="{{url('suspend')}}" class="susForm" method="post">
                         @csrf
-                        <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                        <input type="hidden" name="username" value="{{$report['Username']}}">
+                        <button type="submit" class="btnSus focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             Suspend
                         </button>
                     </form>
                 </td>
                 <td class="px-6 py-4">
-                    <form action="{{url('/delete/'.$report['Post_ID'])}}" method="post">
+                    <form action="{{url('/delete')}}" method="post">
                         @csrf
+                        <input type="hidden" name="postID" value="{{$report['Post_ID']}}">
                         <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             Delete
                         </button>
@@ -58,5 +61,32 @@
             </tr>
             @endforeach
         </tbody>
+        <script type="text/javascript">
+            $(document).ready(()=>{
+                $('.susForm').on('submit', (e)=>{
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    const data = $(e.target).closest('form').serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{url('suspend')}}",
+                        data: data,
+                        success: (response)=> {
+                            const btnSus = $(e.target).find('.btnSus');
+                            btnSus.html("Suspended");
+                            btnSus.prop('disabled', true);
+                        },
+                        beforeSend: ()=>{
+                            const btnSus = $(e.target).find('.btnSus');
+                            btnSus.html("Suspending...");
+                            btnSus.prop('disabled', true);
+                        },
+                        error: (xhr, status, error)=>{
+                            console.log(xhr.responseText);
+                        }
+                    });
+                });
+            });
+        </script>
     </table>
 </div>
