@@ -18,9 +18,12 @@ class Home extends Component
     {
         session_start();
         $user = DbController::query('SELECT * FROM users WHERE Username=?', $this->username);
+        $isFollowed = DbController::query('SELECT isFollowed FROM isfollowed WHERE  Follower=?', $_SESSION['username']);
+        $isFollowed = $isFollowed ? $isFollowed[0]['isFollowed'] : 0;
         return view('livewire.profile.home')->with([
             'username'=>$this->username,
             'user'=>$user,
+            'isFollowed'=>$isFollowed
         ]);
     }
 }

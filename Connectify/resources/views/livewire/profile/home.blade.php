@@ -38,7 +38,7 @@
             <section class="grid grid-cols-12 gap-3">
                 <span class="col-span-11 text-lg lg:col-span-5 truncate font-medium flex items-center gap-2">
                     {{$username}}
-                     @if($user[0]['isVerified']==1)
+                     @if($user[0]['isVerified'])
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="blue" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                         </svg>
@@ -69,22 +69,18 @@
 
                 </button>
                 @else
-
                 <div class="col-span-12 lg:col-span-6 grid grid-cols-2 gap-3 ">
                     {{-- check following status --}}
-                    @if (!true)
-                    <button wire:click="toggleFollow()" type="button"
-                        class=" inline-flex justify-center font-bold items-center  rounded-lg  text-sm p-1.5 px-2 transition  bg-gray-200 hover:bg-slate-100 ">
-                        Following
-                    </button>
-                    @else
-
-
-                    <button wire:click="toggleFollow()" type="button"
-                        class=" inline-flex justify-center font-bold items-center  rounded-lg  text-sm p-1.5 px-2 transition  bg-blue-500 text-white  ">
-                        Follow
-                    </button>
-                    @endif
+                    <form action="{{url('follow')}}" method="post" id="followForm">
+                        @csrf
+                        <input type="hidden" name="isFollowed" value="{{$isFollowed}}">
+                        <input type="hidden" name="following" value="{{$username}}">
+                        <button type="submit"
+                            class=" inline-flex justify-center font-bold items-center  rounded-lg  text-sm p-1.5 px-2 transition  {{$isFollowed ? 'bg-gray-200 hover:bg-slate-100'
+                                : 'bg-blue-500 text-white'}} ">
+                            {{$isFollowed ? 'Following' : 'Follow'}}
+                        </button>
+                    </form>
 
                 </div>
 
@@ -149,5 +145,24 @@
     <main class="my-7">
         
     </main>
-
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#followForm').on('submit', (e)=>{
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                const data = $(e.target).closest('form').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('follow')}}",
+                    data: data,
+                    success: function (response) {
+                        location.reload();
+                    },
+                    error: (xhr, status, error)=>{
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 </div>
