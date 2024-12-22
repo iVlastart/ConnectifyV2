@@ -11,28 +11,28 @@
             </div>
             <div class="col-span-1 flex text-right justify-end">
                 
-<button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-gray-500 ml-auto" type="button">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
-    </svg>
-</button>
+                <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-gray-500 ml-auto" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                    </svg>
+                </button>
 
-<div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-      </li>
-    </ul>
-</div>
+                <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    <li>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                    </li>
+                    </ul>
+                </div>
 
             </div>
         </div>
@@ -53,7 +53,7 @@
     {{--footer--}}
     <footer>
         <div class="flex gap-4 items-center my-2">
-            <form action="/likePost" method="post" id="like">
+            <form action="{{url('likePost')}}" method="post" class="likeForm">
                 @csrf
                 <input type="hidden" name="postID" value="{{$postID}}">
                 <input type="hidden" name="isLiked" value="{{$isLiked}}">
@@ -86,27 +86,24 @@
         </div>
     </footer>
     <script type="text/javascript">
-        $(document).ready(()=>{
-            $('#like').on('submit', function(e){
-                e.preventDefault();
-                const data = $(event.target).closest('form').serialize();
-                $.ajax({
-                    type: 'POST',
-                    url: '/likePost',
-                    data: data,
-                    success: (resp)=>{
-                        const svg = $(this).find('svg path');
-                        if (svg.attr('fill') === 'currentColor') {
-                            svg.attr('fill', 'white');
-                        } else {
-                            svg.attr('fill', 'currentColor');
-                        }
-                    },
-                    error: (xhr, status, error)=>{
-                        console.log(xhr.responseText);
-                    }
-                })
-            })
+        $(document).ready(() => {
+        $('.likeForm').off('submit').on('submit', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const data = $(e.target).closest('form').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '{{url("likePost")}}',
+                data: data,
+                success: (resp) => {
+                    const svg = $(this).find('svg path');
+                    svg.attr('fill', svg.attr('fill') === 'currentColor' ? 'white' : 'currentColor');
+                },
+                error: (xhr, status, error) => {
+                    console.log(xhr.responseText);
+                }
+            });
         });
+    });
     </script>
 </div>

@@ -32,7 +32,7 @@
                 @foreach($posts as $post)
                     @php
                         $username=DbController::query('SELECT Username FROM users WHERE ID=?', $post['ID']);
-                        $isLiked=DbController::query('SELECT isLiked FROM isliked WHERE Post_ID=?', $post['Post_ID']);
+                        $isLiked=DbController::query('SELECT isLiked FROM isliked WHERE Username=? AND Post_ID=?', $_SESSION['username'], $post['Post_ID']);
                         $date = DateTime::createFromFormat('Y-m-d',$post['PostDate'])->format('d/m/Y');
                         $isLiked = !empty($isLiked) && count($isLiked) > 0 ? $isLiked[0]['isLiked'] : 0;
                     @endphp
