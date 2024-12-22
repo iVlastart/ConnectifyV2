@@ -15,8 +15,10 @@ class Item extends Component
     public $url;
     public $isLiked;
     public $postID;
+    public $isVerified;
 
-    public function mount($username = 'guest', $content="Hello, World!", $hasMedia=false, $hasText=false, $postDate="Today", $url="", $isLiked=false, $postID=0) // Default value
+    public function mount($username = 'guest', $content="Hello, World!", $hasMedia=false, $hasText=false, $postDate="Today", $url="", $isLiked=false, $postID=0,
+        $isVerified=false) // Default value
     {
         $this->username = $username;
         $this->content = $content;
@@ -26,6 +28,7 @@ class Item extends Component
         $this->url = $url;
         $this->isLiked = $isLiked;
         $this->postID = $postID;
+        $this->isVerified = $isVerified;
     }
     public function render()
     {

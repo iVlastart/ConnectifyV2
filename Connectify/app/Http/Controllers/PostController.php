@@ -22,11 +22,16 @@ class PostController extends Controller
     function toggleLike(Request $request)
     {
         session_start();
-        $data = new \stdClass();
-        $data->postID = $request->postID;
-        $data->isLiked = $request->isLiked;
-        !$data->isLiked
-        ? DbController::query('INSERT INTO isliked VALUES(?,?,?)', $_SESSION['username'], $data->postID, !$data->isLiked)
-        : DbController::query('DELETE FROM isliked WHERE Username=? AND Post_ID=?', $_SESSION['username'], $data->postID);
+        !$request->isLiked
+        ? DbController::query('INSERT INTO isliked VALUES(?,?,?)', $_SESSION['username'], $request->postID, !$request->isLiked)
+        : DbController::query('DELETE FROM isliked WHERE Username=? AND Post_ID=?', $_SESSION['username'], $request->postID);
+    }
+
+    function delete(Request $request)
+    {
+        $postID=$request->postID;
+        DbController::query('DELETE FROM isliked WHERE Post_ID=?', $postID);
+        DbController::query('DELETE FROM posts WHERE Post_ID=?', $postID);
+        DbController::query('DELETE FROM reports WHERE Post_ID=?', $postID);
     }
 }

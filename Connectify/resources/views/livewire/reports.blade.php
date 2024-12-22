@@ -53,7 +53,7 @@
                     <form action="{{url('/delete')}}" method="post" class="deleteForm">
                         @csrf
                         <input type="hidden" name="postID" value="{{$report['Post_ID']}}">
-                        <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                        <button type="submit" class="btnDelete focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             Delete
                         </button>
                     </form>
@@ -95,7 +95,15 @@
                         url: "{{url('delete')}}",
                         data: data,
                         success: function (resp) {
-                            alert('click')
+                            const btnDelete = $(e.target).find('.btnDelete');
+                            btnDelete.html("Deleted");
+                            btnDelete.prop('disabled', true);
+                            location.reload();
+                        },
+                        beforeSend: ()=>{
+                            const btnDelete = $(e.target).find('.btnDelete');
+                            btnDelete.html("Deleting...");
+                            btnDelete.prop('disabled', true);
                         },
                         error: function (xhr, status, error) {
                             console.log(xhr.responseText);
