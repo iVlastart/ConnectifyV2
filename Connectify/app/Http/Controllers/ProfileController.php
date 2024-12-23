@@ -94,6 +94,7 @@ class ProfileController extends Controller
     {
         session_start();
         if($username!==$_SESSION['username']) return redirect('/destroy/'.$_SESSION['username']);
+        if($username==='Connectify') return redirect('/');
         
     }
 }
