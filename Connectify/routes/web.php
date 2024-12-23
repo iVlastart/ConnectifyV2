@@ -39,3 +39,4 @@ Route::post('/report', [ReportController::class, 'reportPost'])->name('report');
 Route::post('/suspend', [ProfileController::class, 'suspend'])->name('suspend');
 Route::post('/delete', [PostController::class, 'delete'])->name('delete');
 Route::post('/follow', [ProfileController::class, 'follow'])->name('follow');
+Route::post('/edit', [ProfileController::class, 'edit'])->name('edit');

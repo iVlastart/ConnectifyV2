@@ -39,4 +39,24 @@ class ProfileController extends Controller
             DbController::query('UPDATE users SET Following=? WHERE Username=?', $following[0]['Following'], $_SESSION['username']);
         }
     }
+
+    function edit(Request $request)
+    {
+        session_start();
+        switch($request->type)
+        {
+            case 'username':
+                $this->updateUsername($request->username);
+                break;
+        }
+    }
+
+    function updateUsername($username)
+    {
+        if(!DbController::query('SELECT Username FROM users WHERE Username=?', $username))
+        {
+            DbController::query('UPDATE users SET Username=? WHERE Username=?', $username, $_SESSION['username']);
+            $_SESSION['username']=$username;
+        }
+    }
 }
