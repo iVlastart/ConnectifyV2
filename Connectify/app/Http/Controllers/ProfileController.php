@@ -10,7 +10,7 @@ class ProfileController extends Controller
     function suspend(Request $request)
     {
         session_start();
-        $_SESSION['username']==='Connectify' 
+        $request->username==='Connectify' 
             ? DbController::query('')
             :DbController::query('UPDATE users SET Suspended=? WHERE Username=?', 1, $request->username);
     }

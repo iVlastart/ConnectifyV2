@@ -38,29 +38,32 @@
         <form action="/edit" method="post" id="usernameForm" class="flex items-center gap-2">
             @csrf
             <input type="hidden" name="type" value="username">
-            <input type="text" name="username" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none">
+            <input type="text" name="username" placeholder="{{$_SESSION['username']}}" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none">
             <button type="submit" class="inline-flex text-sm font-semibold text-blue-600 underline decoration-2">Change</button>
         </form>
       </div>
       <hr class="mt-4 mb-8" />
-      <p class="py-2 text-xl font-semibold">Password</p>
-      <div class="flex items-center">
-        <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
-          <label for="login-password">
-            <span class="text-sm text-gray-500">Current Password</span>
-            <div class="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
-              <input type="password" id="login-password" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="***********" />
+      <form action="/edit" method="post">
+        @csrf
+        <p class="py-2 text-xl font-semibold">Password</p>
+        <div class="flex items-center">
+            <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
+            <label for="old">
+                <span class="text-sm text-gray-500">Current Password</span>
+                <div class="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
+                <input type="password" id="old" name="oldPass" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="***********" />
+                </div>
+            </label>
+            <label for="new">
+                <span class="text-sm text-gray-500">New Password</span>
+                <div class="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
+                <input type="password" id="new" name="newPass" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="***********" />
+                </div>
+            </label>
             </div>
-          </label>
-          <label for="login-password">
-            <span class="text-sm text-gray-500">New Password</span>
-            <div class="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
-              <input type="password" id="login-password" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="***********" />
-            </div>
-          </label>
         </div>
-      </div>
-      <button class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white">Save Password</button>
+        <button type="submit" class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white">Save Password</button>
+      </form>
       <hr class="mt-4 mb-8" />
 
       <div class="mb-10">
