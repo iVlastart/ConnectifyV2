@@ -43,11 +43,23 @@
                             </form>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Block user
-                        </a>
-                    </li>
+                    @if($username!==$_SESSION['username'])
+                        <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <form action="{{url('block')}}" method="get" class="blockForm">
+                                    @csrf
+                                    <input type="hidden" name="blocker" value="{{$_SESSION['username']}}">
+                                    <input type="hidden" name="blocking" value="{{$username}}">
+                                    <button type="submit" class="btnReport flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <strong class="text-red-600">Block</strong>
+                                    </button>
+                                </form>
+                            </a>
+                        </li>
+                    @endif
                     @if($_SESSION['username']==='Connectify' || $username===$_SESSION['username'])
                         <li>
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
@@ -144,6 +156,23 @@
                     btnReport.prop('disabled', true);
                 },
                 error: (xhr, status, error)=>{
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $('.blockForm').on('submit', (e)=>{
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const data = $(e.target).closest('form').serialize();
+            $.ajax({
+                type: "POST",
+                url: "{{url('block')}}",
+                data: data,
+                success: function (resp) {
+                    alert('sent');
+                },
+                error: function (xhr, status, error) {
                     console.log(xhr.responseText);
                 }
             });

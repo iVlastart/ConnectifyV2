@@ -37,7 +37,7 @@
                     {{$slot}}
                 </div>
             @if(!request()->is('login') && !request()->is('register'))
-            <livewire:components.sidebar/>
+            <x-sidebar/>
             @endif
         </div>
     </body>

@@ -42,3 +42,5 @@ Route::post('/suspend', [ProfileController::class, 'suspend'])->name('suspend');
 Route::post('/delete', [PostController::class, 'delete'])->name('delete');
 Route::post('/follow', [ProfileController::class, 'follow'])->name('follow');
 Route::post('/edit', [ProfileController::class, 'edit'])->name('edit');
+Route::get('/search/{search}', [ProfileController::class, 'search'])->name('search');
+Route::post('/block', [ProfileController::class, 'block'])->name('block');

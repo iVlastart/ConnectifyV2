@@ -1,4 +1,4 @@
-    <div class="drawer-side" x-data="{
+<div class="drawer-side" x-data="{
         shrink:false,
         showSearch: false,
         showCreate:false
@@ -66,16 +66,10 @@
                 <div x-cloak class="h-full">
                     <header class="sticky top-0 w-full bg-white py-2">
                         <h5 class="text-4xl font-bold my-4">Search</h5>
-                        <form action="/" method="post">
-                            @csrf
-                            <div class="join w-full">
-                                <input type="search" name="search" class="input input-bordered join-item border-0 outline-none w-full focus:outline-none bg-gray-100 rounded-lg hover:ring-0 focus:ring-0" placeholder="Search" />
-                                <button type="submit" class="btn join-item rounded-r-full">Search</button>
-                            </div>
-                        </form>
+                        <input type="search" autocomplete="off" id="search" class="input input-bordered join-item border-0 outline-none w-full focus:outline-none bg-gray-100 rounded-lg hover:ring-0 focus:ring-0" placeholder="Search" />
                     </header>
                     <main>
-                        
+                        <ul id="results" class="space-y-2 overflow-x-hidden"></ul>
                     </main>
                 </div>
             </template>
@@ -115,6 +109,40 @@
             document.getElementById('txtInput').addEventListener('input', function(){
                 const counter =document.getElementById('counter');
                 counter.innerText = this.value.length+"/100";
+            });
+
+            $(document).on('keyup', '#search', function (e) {
+                let searchText = e.target.value;
+                document.getElementById('results').innerHTML = '';
+                $.ajax({
+                    type: "GET",
+                    url: `/search/${encodeURIComponent(searchText)}`,
+                    success: function (resp) {
+                        const users = resp.users;
+                        console.log(JSON.stringify(users, null, 2));
+                        users.forEach(function (user) {
+                            document.getElementById('results').innerHTML += `
+                                                              <li>
+                                        <a href="/profile/${user.Username}">
+                                            <div class="flex items-center gap-2">
+                                                <x-avatar class="w-10 h-10"/>
+                                                <div class="flex flex-col">
+                                                    <span class="font-bold text-sm">
+                                                        ${user.Username}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <span class="font-normal text-xs truncate>
+                                                ${user.Bio}
+                                            </span>
+                                        </a>
+                                    </li>`;
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
             });
         </script>
     </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DbController;
 
+use function Pest\Laravel\json;
+
 class ProfileController extends Controller
 {
     function suspend(Request $request)
@@ -54,6 +56,14 @@ class ProfileController extends Controller
         }
     }
 
+    function search($search)
+    {
+        $users = DbController::queryAll('SELECT * FROM users WHERE Username LIKE ?', "%$search%");
+        return response()->json([
+            'users'=>$users
+        ]);
+    }
+
     function updateUsername($username)
     {
         if(!DbController::query('SELECT Username FROM users WHERE Username=?', $username))
@@ -70,6 +80,14 @@ class ProfileController extends Controller
         {
             DbController::query('UPDATE users SET Password=? WHERE Username=?', password_hash($new, PASSWORD_DEFAULT), $_SESSION['username']);
         }
+    }
+
+    function block(Request $request)
+    {
+        DbController::query('SELECT * FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking)
+            ? DbController::query('INSERT INTO isblocked VALUES ?,?,?', $request->blocker, $request->blocking, 1)
+            : DbController::query('DELETE FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking);
+
     }
 
     function destroy($username)
