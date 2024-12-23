@@ -1,4 +1,4 @@
-<div class="max-w-lg mx-auto">
+<div class="max-w-lg mx-auto pt-2">
     {{--header--}}
     <header class="flex items-center gap-3">
         <a href="/profile/{{$username}}"><x-avatar class="h-9 w-9"/></a>
@@ -117,6 +117,7 @@
                 </svg>
             </span>
         </div>
+        <hr>
     </footer>
     <script type="text/javascript">
         $(document).ready(() => {

@@ -134,7 +134,16 @@
                 <h4 class="font-bold capitalize">Posts</h4>
 
                 </a>
-
+            </li>
+            <li class="flex items-center gap-2 py-2 cursor-pointer">
+                <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer" href="#">
+                    <h4 class="font-bold capitalize">Replies</h4>
+                </a>
+            </li>
+            <li class="flex items-center gap-2 py-2 cursor-pointer">
+                <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer" href="#">
+                    <h4 class="font-bold capitalize">Media</h4>
+                </a>
             </li>
         </ul>
 
