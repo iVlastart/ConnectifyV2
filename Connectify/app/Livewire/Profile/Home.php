@@ -20,10 +20,13 @@ class Home extends Component
         $user = DbController::query('SELECT * FROM users WHERE Username=?', $this->username);
         $isFollowed = DbController::query('SELECT isFollowed FROM isfollowed WHERE  Follower=?', $_SESSION['username']);
         $isFollowed = $isFollowed ? $isFollowed[0]['isFollowed'] : 0;
+        $isBlocked = DbController::query('SELECT isBlocked FROM isblocked WHERE Blocker=? AND Blocking=?', $this->username, $_SESSION['username']);
+        $isBlocked = $isBlocked ? $isBlocked[0]['isBlocked'] : 0;
         return view('livewire.profile.home')->with([
             'username'=>$this->username,
             'user'=>$user,
-            'isFollowed'=>$isFollowed
+            'isFollowed'=>$isFollowed,
+            'isBlocked'=>$isBlocked,
         ]);
     }
 }

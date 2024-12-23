@@ -84,8 +84,8 @@ class ProfileController extends Controller
 
     function block(Request $request)
     {
-        DbController::query('SELECT * FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking)
-            ? DbController::query('INSERT INTO isblocked VALUES ?,?,?', $request->blocker, $request->blocking, 1)
+        !DbController::query('SELECT * FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking)
+            ? DbController::query('INSERT INTO isblocked VALUES (?,?,?)', $request->blocker, $request->blocking, 1)
             : DbController::query('DELETE FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking);
 
     }

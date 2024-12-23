@@ -46,11 +46,11 @@
                     @if($username!==$_SESSION['username'])
                         <li>
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                <form action="{{url('block')}}" method="get" class="blockForm">
+                                <form action="{{url('block')}}" method="post" class="blockForm">
                                     @csrf
                                     <input type="hidden" name="blocker" value="{{$_SESSION['username']}}">
                                     <input type="hidden" name="blocking" value="{{$username}}">
-                                    <button type="submit" class="btnReport flex items-center gap-2">
+                                    <button type="submit" class="btnBlock flex items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                         </svg>
@@ -170,7 +170,14 @@
                 url: "{{url('block')}}",
                 data: data,
                 success: function (resp) {
-                    alert('sent');
+                    const btnReport = $(e.target).find('.btnBlock');
+                    btnReport.html("Blocked");
+                    btnReport.prop('disabled', true);
+                },
+                beforeSend: ()=>{
+                    const btnReport = $(e.target).find('.btnBlock');
+                    btnReport.html("Blocking...");
+                    btnReport.prop('disabled', true);
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);

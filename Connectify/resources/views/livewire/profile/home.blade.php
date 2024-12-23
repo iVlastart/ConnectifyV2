@@ -143,7 +143,11 @@
 
 
     <main class="my-7">
-        
+        @if($isBlocked)
+            <livewire:profile.blocked/>
+        @else
+            <livewire:profile.posts username="{{$username}}"/>
+        @endif
     </main>
     <script type="text/javascript">
         $(document).ready(function(){
