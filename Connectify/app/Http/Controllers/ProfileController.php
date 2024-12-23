@@ -71,4 +71,11 @@ class ProfileController extends Controller
             DbController::query('UPDATE users SET Password=? WHERE Username=?', password_hash($new, PASSWORD_DEFAULT), $_SESSION['username']);
         }
     }
+
+    function destroy($username)
+    {
+        session_start();
+        if($username!==$_SESSION['username']) return redirect('/destroy/'.$_SESSION['username']);
+        
+    }
 }

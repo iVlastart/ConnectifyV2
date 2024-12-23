@@ -38,7 +38,7 @@
         <form action="/edit" method="post" id="usernameForm" class="flex items-center gap-2">
             @csrf
             <input type="hidden" name="type" value="username">
-            <input type="text" name="username" placeholder="{{$_SESSION['username']}}" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none">
+            <input type="text" name="username" placeholder="{{$_SESSION['username']}}" autocomplete="off" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none">
             <button type="submit" class="inline-flex text-sm font-semibold text-blue-600 underline decoration-2">Change</button>
         </form>
       </div>
@@ -66,7 +66,12 @@
         <button type="submit" class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white">Save Password</button>
       </form>
       <hr class="mt-4 mb-8" />
-
+    
+      <div class="mb-10">
+        <p class="py-2 text-xl font-semibold">Sign out</p>
+        <a href="{{url('logout')}}" class="mt-4 rounded-lg bg-red-600 px-4 py-2 text-white">Sign out</a>
+      </div>
+      <hr class="mt-4 mb-8"/>
       <div class="mb-10">
         <p class="py-2 text-xl font-semibold">Delete Account</p>
         <p class="inline-flex items-center rounded-full bg-rose-100 px-4 py-1 text-rose-600">
@@ -75,8 +80,8 @@
           </svg>
           Proceed with caution
         </p>
-        <p class="mt-2">Make sure you have taken backup of your account in case you ever need to get access to your data. We will completely wipe your data. There is no way to access your account after this action.</p>
-        <button class="ml-auto text-sm font-semibold text-rose-600 underline decoration-2">Continue with deletion</button>
+        <p class="mt-2">Your account will be deleted. Once you delete your account there is no coming back</p>
+        <a href="{{url('destroy/'.$_SESSION['username'])}}" class="ml-auto text-sm font-semibold text-rose-600 underline decoration-2">Continue with deletion</a>
       </div>
     </div>
   </div>

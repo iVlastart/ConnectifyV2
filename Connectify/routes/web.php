@@ -22,6 +22,7 @@ Route::post('/', [PostController::class, 'makePost'])->name('post');
 //profile routes
 Route::get('/profile/{username}', ProfileHome::class)->name('profile');
 Route::get('/profile/{username}/edit', ProfileEdit::class)->name('profile.edit');
+Route::get('/destroy/{username}', [ProfileController::class, 'destroy'])->name('destroy');
 
 //admin routes
 Route::get('/reports', Reports::class)->name('reports');
@@ -31,6 +32,7 @@ Route::get('/login', Login::class)->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/register', Login::class)->name('signin');
 Route::post('/register', [LoginController::class, 'register'])->name('signin');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //ajax routes

@@ -44,4 +44,12 @@ use function Laravel\Prompts\alert;
                 return redirect('/');
             }
         }
+
+        public function logout()
+        {
+            session_start();
+            session_destroy();
+            session_abort();
+            return redirect('/login');
+        }
     }
