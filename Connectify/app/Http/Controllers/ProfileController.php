@@ -48,6 +48,9 @@ class ProfileController extends Controller
             case 'username':
                 $this->updateUsername($request->username);
                 break;
+            case 'password':
+                $this->updatePassword($request->oldPass, $request->newPass);
+                break;
         }
     }
 
@@ -57,6 +60,15 @@ class ProfileController extends Controller
         {
             DbController::query('UPDATE users SET Username=? WHERE Username=?', $username, $_SESSION['username']);
             $_SESSION['username']=$username;
+        }
+    }
+
+    function updatePassword($old, $new)
+    {
+        $password = DbController::query('SELECT Password FROM users WHERE Username=?', $_SESSION['username']);
+        if(password_verify($old, $password[0]['Password']))
+        {
+            DbController::query('UPDATE users SET Password=? WHERE Username=?', password_hash($new, PASSWORD_DEFAULT), $_SESSION['username']);
         }
     }
 }

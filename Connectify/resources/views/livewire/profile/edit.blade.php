@@ -43,8 +43,9 @@
         </form>
       </div>
       <hr class="mt-4 mb-8" />
-      <form action="/edit" method="post">
+      <form action="/edit" method="post" id="passForm">
         @csrf
+        <input type="hidden" name="type" value="password">
         <p class="py-2 text-xl font-semibold">Password</p>
         <div class="flex items-center">
             <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
@@ -84,6 +85,22 @@
   <script type="text/javascript">
     $(document).ready(function() {
         $('#usernameForm').submit(function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const data = $(e.target).closest('form').serialize();
+            $.ajax({
+                type: "POST",
+                url: "{{url('edit')}}",
+                data: data,
+                success: function (resp) {
+                    location.reload();
+                },
+                error: (xhr, status, error)=>{
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+        $('#passForm').submit(function(e){
             e.preventDefault();
             e.stopImmediatePropagation();
             const data = $(e.target).closest('form').serialize();
