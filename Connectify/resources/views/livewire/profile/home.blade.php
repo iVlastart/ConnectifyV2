@@ -51,8 +51,6 @@
                 @if ($_SESSION['username']===$username)
 
                 <div class="col-span-12 lg:col-span-6 grid grid-cols-2 gap-3 ">
-
-                    {{-- Send message button --}}
                     <a href="{{url('profile/'.$_SESSION['username']).'/edit'}}" type="button"
                         class=" inline-flex justify-center font-bold items-center  rounded-lg  text-sm p-1.5 px-2 transition  bg-gray-200 hover:bg-slate-100 ">
                         Edit profile
