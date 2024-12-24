@@ -3,13 +3,19 @@
 namespace App\Livewire;
 
 use App\Http\Controllers\DbController;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 
 class Home extends Component
 {
-    public function render()
+
+    public function mount()
     {
         session_start();
+        if(!isset($_SESSION['username']) || empty($_SESSION['username'])) return Redirect::to('/login');
+    }
+    public function render()
+    {
         if($_SESSION['username']==="") return redirect('login');
         $users = DbController::queryAll('SELECT * FROM users WHERE Username=?', $_SESSION['username']);
         foreach($users as $user)
