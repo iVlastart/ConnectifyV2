@@ -2,6 +2,7 @@
     @php
         use App\Http\Controllers\DbController;
     @endphp
+    @if($type !== "edit")
     {{-- Mobile only header --}}
     <header class="items-center py-2 px-2 border-b lg:hidden grid grid-cols-12">
         {{-- cheveron from heroicons --}}
@@ -124,7 +125,7 @@
 
     {{-- Tabs --}}
     <section class="border-t">
-        <ul class="grid grid-cols-3 gap-4 max-w-sm mx-auto pb-3 ">
+        <ul class="grid {{$username===$_SESSION['username'] ? 'grid-cols-5' : 'grid-cols-3'}} gap-4 max-w-sm mx-auto pb-3 ">
             {{-- Posts --}}
             <li class="flex items-center gap-2 py-2 cursor-pointer">
                 {{-- border icon from bootsrap icons --}}
@@ -136,26 +137,50 @@
                 </a>
             </li>
             <li class="flex items-center gap-2 py-2 cursor-pointer">
-                <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer" href="#">
+                <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer" href="/profile/{{$username}}/with_replies">
                     <h4 class="font-bold capitalize">Replies</h4>
                 </a>
             </li>
             <li class="flex items-center gap-2 py-2 cursor-pointer">
-                <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer" href="#">
+                <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer" href="/profile/{{$username}}/media">
                     <h4 class="font-bold capitalize">Media</h4>
                 </a>
             </li>
+            @if($username===$_SESSION['username'])
+                <li class="flex items-center gap-2 py-2 cursor-pointer">
+                    <a wire:navigate class="flex items-center gap-2 py-2 cursor-pointer" href="/profile/{{$username}}/saved">
+                        <h4 class="font-bold capitalize">Saved</h4>
+                    </a>
+                </li>
+            @endif
         </ul>
-
-
     </section>
-
+    @endif
 
     <main class="my-7">
         @if($isBlocked)
             <livewire:profile.blocked/>
         @else
-            <livewire:profile.posts username="{{$username}}"/>
+            @switch($type)
+                @case('posts')
+                <livewire:profile.posts username="{{$username}}"/>
+                @break
+                @case('media')
+                <livewire:profile.media username="{{$username}}"/>
+                @break
+                @case('saved')
+                    @if($username!==$_SESSION['username'])
+                        @php
+                            return redirect('/profile/'.$username);
+                        @endphp
+                    @else
+                    <livewire:profile.saved username="{{$username}}"/>
+                    @endif
+                @break
+                @case('edit')
+                <livewire:profile.edit username="{{$username}}"/>
+                @break
+            @endswitch
         @endif
     </main>
     <script type="text/javascript">

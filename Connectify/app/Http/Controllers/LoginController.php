@@ -15,10 +15,11 @@ use function Laravel\Prompts\alert;
             session_start();
             $username = strip_tags($request["username"]);
             $password = strip_tags($request["password"]);
-            $users = DbController::query('SELECT Username, Password FROM Users WHERE Username=?', $username);
+            $users = DbController::query('SELECT Username, Password, Suspended FROM Users WHERE Username=?', $username);
             if(!$users) return redirect('login'); 
             $dbUsername = $users[0]["Username"];
             $hash = $users[0]["Password"];
+            if($users[0]['Suspended']) return redirect('/login');
             if($username===$dbUsername && password_verify($password, $hash))
             {
                 $_SESSION["username"]=$username;

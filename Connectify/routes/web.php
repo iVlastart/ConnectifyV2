@@ -20,7 +20,8 @@ Route::get('/', Home::class)->name('home');
 Route::post('/', [PostController::class, 'makePost'])->name('post');
 
 //profile routes
-Route::get('/profile/{username}', ProfileHome::class)->name('profile');
+Route::get('/profile/{username}/', ProfileHome::class)->name('profile');
+Route::get('/profile/{username}/{type}', ProfileHome::class)->name('profile');
 Route::get('/profile/{username}/edit', ProfileEdit::class)->name('profile.edit');
 Route::get('/destroy/{username}', [ProfileController::class, 'destroy'])->name('destroy');
 
@@ -44,3 +45,4 @@ Route::post('/follow', [ProfileController::class, 'follow'])->name('follow');
 Route::post('/edit', [ProfileController::class, 'edit'])->name('edit');
 Route::get('/search/{search}', [ProfileController::class, 'search'])->name('search');
 Route::post('/block', [ProfileController::class, 'block'])->name('block');
+Route::post('/save', [PostController::class, 'save'])->name('save');

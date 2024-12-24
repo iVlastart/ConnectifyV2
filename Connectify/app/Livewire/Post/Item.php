@@ -16,9 +16,10 @@ class Item extends Component
     public $isLiked;
     public $postID;
     public $isVerified;
+    public $isSaved;
 
     public function mount($username = 'guest', $content="Hello, World!", $hasMedia=false, $hasText=false, $postDate="Today", $url="", $isLiked=false, $postID=0,
-        $isVerified=false) // Default value
+        $isVerified=false, $isSaved=false) // Default value
     {
         $this->username = $username;
         $this->content = $content;
@@ -29,6 +30,7 @@ class Item extends Component
         $this->isLiked = $isLiked;
         $this->postID = $postID;
         $this->isVerified = $isVerified;
+        $this->isSaved = $isSaved;
     }
     public function render()
     {

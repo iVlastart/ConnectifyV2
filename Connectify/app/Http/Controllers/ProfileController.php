@@ -93,8 +93,13 @@ class ProfileController extends Controller
     function destroy($username)
     {
         session_start();
-        if($username!==$_SESSION['username']) return redirect('/destroy/'.$_SESSION['username']);
-        if($username==='Connectify') return redirect('/');
-        
+        if($username==='Connectify' || $username!==$_SESSION['username']) return redirect('/');
+        /*DbController::query('DELETE FROM users WHERE Username=?', $username);
+        DbController::query('DELETE FROM reports WHERE Username=?', $username);
+        $ID = DbController::query('SELECT ID FROM users WHERE Username=?', $username);
+        DbController::query('DELETE FROM posts WHERE ID=?', $ID[0]['ID']);
+        session_destroy();
+        session_abort();
+        return redirect('/login');*/
     }
 }

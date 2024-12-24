@@ -8,10 +8,12 @@ use Livewire\Component;
 class Home extends Component
 {
     public $username;
+    public $type;
 
-    public function mount($username)
+    public function mount($username, $type="posts")
     {
         $this->username = $username;
+        $this->type = $type;
     }
 
     public function render()
@@ -27,6 +29,7 @@ class Home extends Component
             'user'=>$user,
             'isFollowed'=>$isFollowed,
             'isBlocked'=>$isBlocked,
+            'type'=>$this->type,
         ]);
     }
 }

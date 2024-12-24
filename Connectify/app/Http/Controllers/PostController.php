@@ -23,8 +23,15 @@ class PostController extends Controller
     {
         session_start();
         !$request->isLiked
-        ? DbController::query('INSERT INTO isliked VALUES(?,?,?)', $_SESSION['username'], $request->postID, !$request->isLiked)
-        : DbController::query('DELETE FROM isliked WHERE Username=? AND Post_ID=?', $_SESSION['username'], $request->postID);
+            ? DbController::query('INSERT INTO isliked VALUES(?,?,?)', $_SESSION['username'], $request->postID, !$request->isLiked)
+            : DbController::query('DELETE FROM isliked WHERE Username=? AND Post_ID=?', $_SESSION['username'], $request->postID);
+    }
+
+    function save(Request $request)
+    {
+        !$request->isSaved
+            ? DbController::query('INSERT INTO issaved VALUES(?,?,?)', $request->saver, $request->postID, 1)
+            : DbController::query('DELETE FROM issaved WHERE Saver=? AND Post_ID=?', $request->saver, $request->postID);
     }
 
     function delete(Request $request)

@@ -37,7 +37,7 @@
                     {{$slot}}
                 </div>
             @if(!request()->is('login') && !request()->is('register'))
-            <x-sidebar/>
+                <x-sidebar/>
             @endif
         </div>
     </body>

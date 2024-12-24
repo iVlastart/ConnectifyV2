@@ -13,7 +13,6 @@ class Edit extends Component
     }
     public function render()
     {
-        session_start();
         return view('livewire.profile.edit')->with([
             'username'=>$this->username,
         ]);
