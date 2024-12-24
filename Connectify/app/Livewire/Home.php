@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Http\Controllers\DbController;
+use App\Livewire\Post\Item;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 
@@ -23,7 +24,7 @@ class Home extends Component
             $pfp = $user['Pfp'];
         }
         return view('livewire.home')->with([
-            'pfp'=>$pfp
+            'pfp'=>$pfp,
         ]);
     }
 }
