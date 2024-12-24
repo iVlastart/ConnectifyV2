@@ -94,12 +94,12 @@ class ProfileController extends Controller
     {
         session_start();
         if($username==='Connectify' || $username!==$_SESSION['username']) return redirect('/');
-        /*DbController::query('DELETE FROM users WHERE Username=?', $username);
-        DbController::query('DELETE FROM reports WHERE Username=?', $username);
         $ID = DbController::query('SELECT ID FROM users WHERE Username=?', $username);
         DbController::query('DELETE FROM posts WHERE ID=?', $ID[0]['ID']);
+        DbController::query('DELETE FROM users WHERE Username=?', $username);
+        DbController::query('DELETE FROM reports WHERE Username=?', $username);
         session_destroy();
         session_abort();
-        return redirect('/login');*/
+        return redirect('/login');
     }
 }
