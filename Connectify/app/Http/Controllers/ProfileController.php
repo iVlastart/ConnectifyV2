@@ -62,7 +62,7 @@ class ProfileController extends Controller
 
     function search($search)
     {
-        $users = DbController::queryAll('SELECT * FROM users WHERE Username LIKE ?', "%$search%");
+        $users = DbController::queryAll('SELECT Username, Bio FROM users WHERE Username LIKE ?', "%$search%");
         return response()->json([
             'users'=>$users
         ]);
@@ -93,9 +93,21 @@ class ProfileController extends Controller
 
     function block(Request $request)
     {
-        !DbController::query('SELECT * FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking)
-            ? DbController::query('INSERT INTO isblocked VALUES (?,?,?)', $request->blocker, $request->blocking, 1)
-            : DbController::query('DELETE FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking);
+        if(DbController::query('SELECT * FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking))
+        {
+            DbController::query('INSERT INTO isblocked VALUES (?,?,?)', $request->blocker, $request->blocking, 1);
+            DbController::query('DELETE FROM isfollowed WHERE Follower=? AND Following=?', $request->blocker, $request->blocking);
+            DbController::query('DELETE FROM isfollowed WHERE Follower=? AND Following=?', $request->blocking, $request->blocker);
+            $posts = DbController::query('SELECT ID FROM users WHERE Username=?', $request->blocking);
+            foreach($posts as $post)
+            {
+                DbController::query('DELETE FROM isliked WHERE Username=? AND ID=?', $request->blocker, $post['ID']);
+            }
+        }
+        else
+        {
+            DbController::query('DELETE FROM isblocked WHERE Blocker=? AND Blocking=?', $request->blocker, $request->blocking);
+        }
 
     }
 
