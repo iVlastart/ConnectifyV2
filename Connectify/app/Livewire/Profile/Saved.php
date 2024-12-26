@@ -15,10 +15,9 @@ class Saved extends Component
     public function render()
     {
         $postID = DbController::query('SELECT Post_ID FROM isSaved WHERE Saver=?', $this->username);
-        $postID = !empty($postID) && count($postID) > 0 ? $postID[0]['Post_ID'] : 0;
-        $posts = DbController::queryAll('SELECT * FROM Posts WHERE Post_ID=? ORDER BY Post_ID DESC', $postID);
+        $postID = !empty($postID) && count($postID) > 0 ? $postID : 0;
         return view('livewire.profile.saved')->with([
-            "posts"=>$posts
+            "postID"=>$postID
         ]);
     }
 }

@@ -111,16 +111,19 @@
                 counter.innerText = this.value.length+"/100";
             });
 
-            $(document).on('keyup', '#search', function (e) {
-                let searchText = e.target.value;
+            $(document).on('input', '#search', function (e) {
+                let searchText = e.target.value.trim();
                 document.getElementById('results').innerHTML = '';
+                let names = [];
+                if(document.getElementById('results').innerHTML = '') names = [];
                 $.ajax({
                     type: "GET",
                     url: `/search/${encodeURIComponent(searchText)}`,
                     success: function (resp) {
                         const users = resp.users;
-                        console.log(JSON.stringify(users, null, 2));
+                        //console.log(JSON.stringify(users, null, 2));
                         users.forEach(function (user) {
+                            if (!names.includes(user.Username)) names.push(user.Username);
                             document.getElementById('results').innerHTML += `
                                                               <li>
                                         <a href="/profile/${user.Username}">
