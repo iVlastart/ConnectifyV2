@@ -53,6 +53,10 @@ class ProfileController extends Controller
             case 'password':
                 $this->updatePassword($request->oldPass, $request->newPass);
                 break;
+            case 'bio':
+                $this->updateBio($request->bio);
+                break;
+
         }
     }
 
@@ -80,6 +84,11 @@ class ProfileController extends Controller
         {
             DbController::query('UPDATE users SET Password=? WHERE Username=?', password_hash($new, PASSWORD_DEFAULT), $_SESSION['username']);
         }
+    }
+
+    function updateBio($bio)
+    {
+        DbController::query('UPDATE users SET Bio=? WHERE Username=?', $bio, $_SESSION['username']);
     }
 
     function block(Request $request)

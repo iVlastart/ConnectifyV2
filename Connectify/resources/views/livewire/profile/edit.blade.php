@@ -33,6 +33,7 @@
         <h1 class="py-2 text-2xl font-semibold">Profile settings</h1>
       </div>
       <hr class="mt-4 mb-8" />
+      {{--username--}}
       <p class="py-2 text-xl font-semibold">Username</p>
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <form action="/edit" method="post" id="usernameForm" class="flex items-center gap-2">
@@ -43,6 +44,25 @@
         </form>
       </div>
       <hr class="mt-4 mb-8" />
+      {{--bio--}}
+      <form action="/edit" method="post" id="bioForm">
+        @csrf
+        <input type="hidden" name="type" value="bio">
+        <p class="py-2 text-xl font-semibold">Bio</p>
+        <div class="flex items-center">
+            <div class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
+            <label for="new">
+                <span class="text-sm text-gray-500">Bio</span>
+                <div class="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
+                <input type="text" name="bio" autocomplete="off" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" maxlength="40"/>
+                </div>
+            </label>
+            </div>
+        </div>
+        <button type="submit" class="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white">Update bio</button>
+      </form>
+      <hr class="mt-4 mb-8">
+      {{--password--}}
       <form action="/edit" method="post" id="passForm">
         @csrf
         <input type="hidden" name="type" value="password">
@@ -105,6 +125,22 @@
                 }
             });
         });
+        $('#bioForm').submit(function(e){
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          const data = $(e.target).closest('form').serialize();
+          $.ajax({
+            type: "POST",
+            url: "{{url('edit')}}",
+            data: data,
+            success: function (resp) {
+                location.reload();
+            },
+            error: (xhr, status, error)=>{
+              console.log(xhr.responseText);
+            }
+          });
+        })
         $('#passForm').submit(function(e){
             e.preventDefault();
             e.stopImmediatePropagation();
