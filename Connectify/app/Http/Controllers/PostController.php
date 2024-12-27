@@ -40,5 +40,6 @@ class PostController extends Controller
         DbController::query('DELETE FROM isliked WHERE Post_ID=?', $postID);
         DbController::query('DELETE FROM posts WHERE Post_ID=?', $postID);
         DbController::query('DELETE FROM reports WHERE Post_ID=?', $postID);
+        DbController::query('DELETE FROM issaved WHERE Post_ID=?', $postID);
     }
 }
