@@ -98,6 +98,12 @@ class ProfileController extends Controller
             DbController::query('INSERT INTO isblocked VALUES (?,?,?)', $request->blocker, $request->blocking, 1);
             DbController::query('DELETE FROM isfollowed WHERE Follower=? AND Following=?', $request->blocker, $request->blocking);
             DbController::query('DELETE FROM isfollowed WHERE Follower=? AND Following=?', $request->blocking, $request->blocker);
+            $followers = DbController::query('SELECT Followers FROM users WHERE Username=?', $request->blocking);
+            $following = DbController::query('SELECT Following FROM users WHERE Username=?', $request->blocker);
+            $followers[0]['Followers']--;
+            $following[0]['Following']--;
+            DbController::query('UPDATE users SET Followers=? WHERE Username=?', $followers[0]['Followers'], $request->blocking);
+            DbController::query('UPDATE users SET Following=? WHERE Username=?', $following[0]['Following'], $request->blocker);
             $posts = DbController::query('SELECT ID FROM users WHERE Username=?', $request->blocking);
             foreach($posts as $post)
             {
