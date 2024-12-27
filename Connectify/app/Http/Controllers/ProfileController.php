@@ -110,7 +110,8 @@ class ProfileController extends Controller
             $posts = DbController::query('SELECT ID FROM users WHERE Username=?', $request->blocking);
             foreach($posts as $post)
             {
-                DbController::query('DELETE FROM isliked WHERE Username=? AND ID=?', $request->blocker, $post['ID']);
+                DbController::query('DELETE FROM isliked WHERE Username=? AND Post_ID=?', $request->blocker, $post['ID']);
+                DbController::query('DELETE FROM issaved WHERE Saver=? AND Post_ID=?', $request->blocker, $post['ID']);
             }
         }
         else
