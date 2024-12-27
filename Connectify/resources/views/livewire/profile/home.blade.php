@@ -61,6 +61,7 @@
                 
                 @else
                 <div class="col-span-12 lg:col-span-6 grid grid-cols-2 gap-3 ">
+                    @if(!$isBlocked && !$isBlocking)
                     {{-- check following status --}}
                     <form action="{{url('follow')}}" method="post" id="followForm">
                         @csrf
@@ -72,6 +73,7 @@
                             {{$isFollowed ? 'Following' : 'Follow'}}
                         </button>
                     </form>
+                    @endif
 
                 </div>
                 @endif

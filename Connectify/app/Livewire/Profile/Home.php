@@ -29,12 +29,15 @@ class Home extends Component
         $isFollowed = $isFollowed ? $isFollowed[0]['isFollowed'] : 0;
         $isBlocked = DbController::query('SELECT isBlocked FROM isblocked WHERE Blocker=? AND Blocking=?', $this->username, $_SESSION['username']);
         $isBlocked = $isBlocked ? $isBlocked[0]['isBlocked'] : 0;
+        $isBlocking = DbController::query('SELECT isBlocked FROM isblocked WHERE Blocker=? AND Blocking=?', $_SESSION['username'], $this->username);
+        $isBlocking = $isBlocking ? $isBlocking[0]['isBlocked'] : 0; 
         return view('livewire.profile.home')->with([
             'username'=>$this->username,
             'user'=>$user,
             'isFollowed'=>$isFollowed,
             'isBlocked'=>$isBlocked,
             'type'=>$this->type,
+            'isBlocking'=>$isBlocking,
         ]);
     }
 }
