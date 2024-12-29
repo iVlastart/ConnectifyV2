@@ -10,6 +10,7 @@ use App\Livewire\Auth\Signin;
 use App\Livewire\Explore;
 use App\Livewire\Search;
 use App\Livewire\Home;
+use App\Livewire\Post\Home as PostHome;
 use App\Livewire\Profile\Edit as ProfileEdit;
 use App\Livewire\Profile\Home as ProfileHome;
 use App\Livewire\Reports;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 //app routes
 Route::get('/', Home::class)->name('home');
 Route::post('/', [PostController::class, 'makePost'])->name('post');
+Route::get('/post/{postID}', PostHome::class)->name('post');
 
 //profile routes
 Route::get('/profile/{username}/', ProfileHome::class)->name('profile');
