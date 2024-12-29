@@ -11,14 +11,16 @@ class Comment extends Component
     public $commentDate;
     public $postID;
     public $commentID;
+    public $content;
 
-    public function mount($username="Commenter", $isVerified=false, $commentDate="Today", $postID=0, $commentID=0)
+    public function mount($username="Commenter", $isVerified=false, $commentDate="Today", $postID=0, $commentID=0, $content="New comment")
     {
         $this->username = $username;
         $this->isVerified = $isVerified;
         $this->commentDate = $commentDate;
         $this->postID = $postID;
         $this->commentID = $commentID;
+        $this->content = $content;
     }
     public function render()
     {

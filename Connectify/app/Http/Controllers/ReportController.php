@@ -9,6 +9,6 @@ class ReportController extends Controller
 {
     function reportPost(Request $request)
     {
-        $success = DbController::query('INSERT INTO reports VALUES (?, ?, ?)', $request->postID, $request->username, $request->isComment);
+        $success = DbController::query('INSERT INTO reports VALUES (?, ?)', $request->postID, $request->username);
     }
 }

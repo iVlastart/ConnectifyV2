@@ -1,19 +1,20 @@
 <div class="w-full h-full">
     @php
         use App\Http\Controllers\DbController;
-        $isVerified=DbController::query('SELECT isVerified FROM users WHERE ID=?', $user[0]['ID']);
+        $isVerified=DbController::query('SELECT isVerified FROM users WHERE ID=?', $user[0]['ID'])[0]['isVerified'];
         $isLiked=DbController::query('SELECT isLiked FROM isliked WHERE Username=? AND Post_ID=?', $_SESSION['username'], $post[0]['Post_ID']);
         $date = DateTime::createFromFormat('Y-m-d',$post[0]['PostDate'])->format('d/m/Y');
         $isLiked = !empty($isLiked) && count($isLiked) > 0 ? $isLiked[0]['isLiked'] : 0;
         $isSaved = DbController::query('SELECT isSaved FROM issaved WHERE Saver=? AND Post_ID=?', $_SESSION['username'], $post[0]['Post_ID']);
         $isSaved = !empty($isSaved) && count($isSaved) > 0 ? $isSaved[0]['isSaved'] : 0;
-        $comment = DbController::query('SELECT * FROM comments WHERE ID=? AND Post_ID=?', $user[0]['ID'], $post[0]['Post_ID']);
-        $commenter = DbController::query('SELECT * FROM users WHERE ID=?', $comment[0]['ID'])
+        $comments = DbController::query('SELECT * FROM comments WHERE ID=? AND Post_ID=?', $user[0]['ID'], $post[0]['Post_ID']);
+        $commenter = $comments ? DbController::query('SELECT * FROM users WHERE ID=?', $comments[0]['ID']) : "";
+        
     @endphp
     <div class="pt-3">
         <livewire:post.item content="{{$post[0]['Content']}}" hasText="{{$post[0]['hasText']}}" username="{{$user[0]['Username']}}"
             postDate="{{$date}}" hasMedia="{{$post[0]['hasMedia']}}" url="{{$post[0]['url']}}" postID="{{$post[0]['Post_ID']}}" isLiked="{{$isLiked}}"
-            isVerified="{{$isVerified[0]['isVerified']}}" isSaved="{{$isSaved}}"/>
+            isVerified="{{$isVerified}}" isSaved="{{$isSaved}}"/>
     </div>
     <div>
         <form method="post" action="{{url('comment')}}" id="commentForm" class="max-w-2xl bg-white rounded-lg border p-2 mx-auto mt-20">
@@ -30,9 +31,13 @@
         </form>
     </div>
     <div>
-        <livewire:post.comment username="{{$commenter[0]['Username']}}"
-            commentDate="{{DateTime::createFromFormat('Y-m-d',$comment[0]['CommentDate'])->format('d/m/Y')}}" commentID="{{$comment[0]['Comment_ID']}}"
-            postID="{{$post[0]['Post_ID']}}"/>
+        @if($comments)
+        @foreach ($comments as $comment)
+            <livewire:post.comment username="{{$commenter[0]['Username']}}"
+                commentDate="{{DateTime::createFromFormat('Y-m-d',$comment['CommentDate'])->format('d/m/Y')}}" commentID="{{$comment['Comment_ID']}}"
+                postID="{{$post[0]['Post_ID']}}" isVerified="{{$isVerified}}" content="{{$comment['Content']}}"/>
+        @endforeach
+        @endif
     </div>
     <script>
         $(document).ready(()=>{
@@ -45,7 +50,7 @@
                     url: "{{url('comment')}}",
                     data: data,
                     success: function (resp) {
-                        alert('submit');
+                        location.reload();
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);

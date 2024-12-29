@@ -37,9 +37,17 @@ class PostController extends Controller
     function delete(Request $request)
     {
         $postID=$request->postID;
-        DbController::query('DELETE FROM isliked WHERE Post_ID=?', $postID);
-        DbController::query('DELETE FROM posts WHERE Post_ID=?', $postID);
-        DbController::query('DELETE FROM reports WHERE Post_ID=?', $postID);
-        DbController::query('DELETE FROM issaved WHERE Post_ID=?', $postID);
+        if($request->isComment)
+        {
+            DbController::query('DELETE FROM comments WHERE Post_ID=?', $postID);
+        }
+        else
+        {
+            DbController::query('DELETE FROM isliked WHERE Post_ID=?', $postID);
+            DbController::query('DELETE FROM posts WHERE Post_ID=?', $postID);
+            DbController::query('DELETE FROM reports WHERE Post_ID=?', $postID);
+            DbController::query('DELETE FROM issaved WHERE Post_ID=?', $postID);
+            DbController::query('DELETE FROM comments WHERE Post_ID=?', $postID);
+        }
     }
 }
