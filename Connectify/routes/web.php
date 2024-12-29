@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
@@ -48,3 +49,4 @@ Route::post('/edit', [ProfileController::class, 'edit'])->name('edit');
 Route::get('/search/{search}', [ProfileController::class, 'search'])->name('search');
 Route::post('/block', [ProfileController::class, 'block'])->name('block');
 Route::post('/save', [PostController::class, 'save'])->name('save');
+Route::post('/comment', [CommentController::class, 'addComment'])->name('comment');

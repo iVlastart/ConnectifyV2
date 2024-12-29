@@ -14,13 +14,40 @@
             isVerified="{{$isVerified[0]['isVerified']}}" isSaved="{{$isSaved}}"/>
     </div>
     <div>
-        <form method="post" class="max-w-2xl bg-white rounded-lg border p-2 mx-auto mt-20">
+        <form method="post" action="{{url('comment')}}" id="commentForm" class="max-w-2xl bg-white rounded-lg border p-2 mx-auto mt-20">
+            @csrf
+            <input type="hidden" name="postID" value="{{$post[0]['Post_ID']}}">
+            <input type="hidden" name="ID" value="{{$user[0]['ID']}}">
             <div class="px-3 mb-2 mt-2">
-                <textarea placeholder="{{'Comment as '.$_SESSION['username']}}" class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"></textarea>
+                <textarea placeholder="{{'Comment as '.$_SESSION['username']}}" name="comment"
+                     class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"></textarea>
             </div>
             <div class="flex justify-end px-4">
                 <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value="Comment">
             </div>
         </form>
     </div>
+    <div>
+        <livewire:post.comment/>
+    </div>
+    <script>
+        $(document).ready(()=>{
+            $('#commentForm').submit((e)=>{
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                const data = $(e.target).closest('form').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('comment')}}",
+                    data: data,
+                    success: function (resp) {
+                        alert('submit');
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 </div>
