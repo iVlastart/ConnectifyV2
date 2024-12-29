@@ -7,6 +7,8 @@
         $isLiked = !empty($isLiked) && count($isLiked) > 0 ? $isLiked[0]['isLiked'] : 0;
         $isSaved = DbController::query('SELECT isSaved FROM issaved WHERE Saver=? AND Post_ID=?', $_SESSION['username'], $post[0]['Post_ID']);
         $isSaved = !empty($isSaved) && count($isSaved) > 0 ? $isSaved[0]['isSaved'] : 0;
+        $comment = DbController::query('SELECT * FROM comments WHERE ID=? AND Post_ID=?', $user[0]['ID'], $post[0]['Post_ID']);
+        $commenter = DbController::query('SELECT * FROM users WHERE ID=?', $comment[0]['ID'])
     @endphp
     <div class="pt-3">
         <livewire:post.item content="{{$post[0]['Content']}}" hasText="{{$post[0]['hasText']}}" username="{{$user[0]['Username']}}"
@@ -28,7 +30,9 @@
         </form>
     </div>
     <div>
-        <livewire:post.comment/>
+        <livewire:post.comment username="{{$commenter[0]['Username']}}"
+            commentDate="{{DateTime::createFromFormat('Y-m-d',$comment[0]['CommentDate'])->format('d/m/Y')}}" commentID="{{$comment[0]['Comment_ID']}}"
+            postID="{{$post[0]['Post_ID']}}"/>
     </div>
     <script>
         $(document).ready(()=>{
