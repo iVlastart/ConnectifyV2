@@ -10,6 +10,11 @@ class CommentController extends Controller
 {
     function addComment(Request $request)
     {
-        DbController::query('INSERT INTO comments (Post_ID, ID, Content) VALUES (?,?,?)', $request->postID, $request->ID, $request->comment);
+        DbController::query('INSERT INTO comments (orgComment_ID, Post_ID, ID, Content, isReply) VALUES (?,?,?,?,?)', $request->orgCommentID, $request->postID, $request->ID, $request->comment, $request->isReply);
+    }
+
+    function destroy(Request $request)
+    {
+        DbController::query('DELETE FROM comments WHERE Comment_ID=? OR orgComment_ID=?', $request->commentID, $request->commentID);
     }
 }

@@ -50,3 +50,4 @@ Route::get('/search/{search}', [ProfileController::class, 'search'])->name('sear
 Route::post('/block', [ProfileController::class, 'block'])->name('block');
 Route::post('/save', [PostController::class, 'save'])->name('save');
 Route::post('/comment', [CommentController::class, 'addComment'])->name('comment');
+Route::post('/deleteComment', [CommentController::class, 'destroy'])->name('delete');

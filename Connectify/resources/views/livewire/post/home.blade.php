@@ -7,7 +7,7 @@
         $isLiked = !empty($isLiked) && count($isLiked) > 0 ? $isLiked[0]['isLiked'] : 0;
         $isSaved = DbController::query('SELECT isSaved FROM issaved WHERE Saver=? AND Post_ID=?', $_SESSION['username'], $post[0]['Post_ID']);
         $isSaved = !empty($isSaved) && count($isSaved) > 0 ? $isSaved[0]['isSaved'] : 0;
-        $comments = DbController::query('SELECT * FROM comments WHERE ID=? AND Post_ID=?', $user[0]['ID'], $post[0]['Post_ID']);
+        $comments = DbController::query('SELECT * FROM comments WHERE Post_ID=? AND isReply=?',  $post[0]['Post_ID'],0);
         $commenter = $comments ? DbController::query('SELECT * FROM users WHERE ID=?', $comments[0]['ID']) : "";
         
     @endphp
@@ -20,7 +20,9 @@
         <form method="post" action="{{url('comment')}}" id="commentForm" class="max-w-2xl bg-white rounded-lg border p-2 mx-auto mt-20">
             @csrf
             <input type="hidden" name="postID" value="{{$post[0]['Post_ID']}}">
-            <input type="hidden" name="ID" value="{{$user[0]['ID']}}">
+            <input type="hidden" name="ID" value="{{DbController::query('SELECT ID FROM users WHERE Username=?', $_SESSION['username'])[0]['ID']}}">
+            <input type="hidden" name="isReply" value="{{0}}">
+            <input type="hidden" name="orgCommentID" value="{{0}}">
             <div class="px-3 mb-2 mt-2">
                 <textarea placeholder="{{'Comment as '.$_SESSION['username']}}" name="comment"
                      class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"></textarea>
@@ -33,6 +35,9 @@
     <div>
         @if($comments)
         @foreach ($comments as $comment)
+            @php
+                $commenter = $comments ? DbController::query('SELECT * FROM users WHERE ID=?', $comment['ID']) : "";
+            @endphp
             <livewire:post.comment username="{{$commenter[0]['Username']}}"
                 commentDate="{{DateTime::createFromFormat('Y-m-d',$comment['CommentDate'])->format('d/m/Y')}}" commentID="{{$comment['Comment_ID']}}"
                 postID="{{$post[0]['Post_ID']}}" isVerified="{{$isVerified}}" content="{{$comment['Content']}}"/>
@@ -51,6 +56,8 @@
                     data: data,
                     success: function (resp) {
                         location.reload();
+                        console.log(resp);
+                        
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);
