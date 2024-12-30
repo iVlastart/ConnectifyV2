@@ -17,4 +17,9 @@ class CommentController extends Controller
     {
         DbController::query('DELETE FROM comments WHERE Comment_ID=? OR orgComment_ID=?', $request->commentID, $request->commentID);
     }
+
+    function destroyReply(Request $request)
+    {
+        DbController::query('DELETE FROM comments WHERE Comment_ID=?', $request->commentID);
+    }
 }

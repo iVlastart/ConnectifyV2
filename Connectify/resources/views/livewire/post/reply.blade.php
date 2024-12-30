@@ -47,11 +47,10 @@
                     @endif
                     @if (($_SESSION['username'] === 'Connectify') || ($username === $_SESSION['username'] && !request()->is('/profile/*') && $commentID !== 0))
                     <li>
-                        {{--}}
                         <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            <form action="{{url('delete')}}" class="deleteForm" method="post">
+                            <form action="{{url('deleteReply')}}" class="deleteForm" method="post">
                                 @csrf
-                                <input type="hidden" name="postID" value="{{$postID}}">
+                                <input type="hidden" name="commentID" value="{{$commentID}}">
                                 <button type="submit" class="btnDelete flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -60,7 +59,6 @@
                                 </button>
                             </form>
                         </a>
-                        {{--}}
                     </li>
                     @endif
                 </ul>
@@ -71,4 +69,47 @@
     <main>
         {{$content}}
     </main>
+    <script>
+        $(document).ready(()=>{
+            $('.deleteForm').submit((e)=>{
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                const data = $(e.target).closest('form').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "{{url('deleteReply')}}",
+                    data: data,
+                    success: function (resp) {
+                        location.reload();
+                    },
+                    error: (xhr, status, error)=>{
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+        $('.blockForm').on('submit', (e)=>{
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const data = $(e.target).closest('form').serialize();
+            $.ajax({
+                type: "POST",
+                url: "{{url('block')}}",
+                data: data,
+                success: function (resp) {
+                    const btnReport = $(e.target).find('.btnBlock');
+                    btnReport.html("Blocked");
+                    btnReport.prop('disabled', true);
+                },
+                beforeSend: ()=>{
+                    const btnReport = $(e.target).find('.btnBlock');
+                    btnReport.html("Blocking...");
+                    btnReport.prop('disabled', true);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    </script>
 </div>

@@ -148,5 +148,28 @@
                 });
             });
         });
+        $('.blockForm').on('submit', (e)=>{
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            const data = $(e.target).closest('form').serialize();
+            $.ajax({
+                type: "POST",
+                url: "{{url('block')}}",
+                data: data,
+                success: function (resp) {
+                    const btnReport = $(e.target).find('.btnBlock');
+                    btnReport.html("Blocked");
+                    btnReport.prop('disabled', true);
+                },
+                beforeSend: ()=>{
+                    const btnReport = $(e.target).find('.btnBlock');
+                    btnReport.html("Blocking...");
+                    btnReport.prop('disabled', true);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
     </script>
 </div>
