@@ -72,7 +72,7 @@
         </div>
     </header>
     <main>
-        {{$content}}
+        {!!$content!!}
     </main>
     <footer>
         <div class="flex gap-4 items-center my-2 hover:cursor-pointer" @click="showReplyForm=true">

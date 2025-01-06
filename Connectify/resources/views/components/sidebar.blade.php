@@ -121,25 +121,24 @@
                     url: `/search/${encodeURIComponent(searchText)}`,
                     success: function (resp) {
                         const users = resp.users;
-                        //console.log(JSON.stringify(users, null, 2));
                         users.forEach(function (user) {
-                            if (!names.includes(user.Username)) names.push(user.Username);
-                            document.getElementById('results').innerHTML += `
-                                                              <li>
-                                        <a href="/profile/${user.Username}">
-                                            <div class="flex items-center gap-2">
-                                                <x-avatar class="w-10 h-10"/>
-                                                <div class="flex flex-col">
-                                                    <span class="font-bold text-sm">
-                                                        ${user.Username}
-                                                    </span>
+                            if (!names.includes(user.Username))
+                            {
+                                names.push(user.Username)
+                                document.getElementById('results').innerHTML += `
+                                                                <li>
+                                            <a href="/profile/${user.Username}">
+                                                <div class="flex items-center gap-2">
+                                                    <x-avatar class="w-10 h-10"/>
+                                                    <div class="flex flex-col">
+                                                        <span class="font-bold text-sm">
+                                                            ${user.Username}
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <span class="font-normal text-xs truncate>
-                                                ${user.Bio}
-                                            </span>
-                                        </a>
-                                    </li>`;
+                                            </a>
+                                        </li>`;
+                            }
                         });
                     },
                     error: function (xhr, status, error) {

@@ -4,7 +4,7 @@
     ?>
     @foreach ($postID as $post)
         <?php
-            $posts = DbController::query('SELECT * FROM posts WHERE Post_ID=? ORDER BY Post_ID DESC', $post['Post_ID']);
+            $posts = DbController::query('SELECT * FROM posts WHERE Post_ID=?', $post['Post_ID']);
             foreach($posts as $post)
             {
             $username=DbController::query('SELECT Username FROM users WHERE ID=?', $post['ID']);
@@ -18,8 +18,8 @@
         <livewire:post.item content="{{$post['Content']}}" hasText="{{$post['hasText']}}" username="{{$username[0]['Username']}}"
             postDate="{{$date}}" hasMedia="{{$post['hasMedia']}}" url="{{$post['url']}}" postID="{{$post['Post_ID']}}" isLiked="{{$isLiked}}"
             isVerified="{{$isVerified[0]['isVerified']}}" isSaved="{{$isSaved}}"/>
-            <?php
-                }
-            ?>
+        <?php
+            }
+        ?>
     @endforeach
 </div>
